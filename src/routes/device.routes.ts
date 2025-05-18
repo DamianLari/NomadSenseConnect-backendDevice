@@ -11,7 +11,6 @@ import { Router } from "express";
 import deviceController from "../controllers/device.controller";
 import { z } from "zod";
 import { zodValidate } from "../middlewares";
-import { authorizeAccess } from "../middlewares/authorize.middleware";
 
 const deviceRouter = Router();
 
@@ -210,33 +209,11 @@ const swaggerDeleteDevice: RouteConfig = {
   },
 };
 
-deviceRouter.get(
-  "/",
-  zodValidate(emptyBodySchema),
-  deviceController.getAll
-);
-deviceRouter.post(
-  "/",
-  zodValidate(createIotSchema),
-  deviceController.create
-);
-deviceRouter.get(
-  "/:deviceId",
-  zodValidate(emptyBodySchema),
-  deviceController.getById
-);
-deviceRouter.put(
-  "/:deviceId",
-  authorizeAccess(),
-  zodValidate(updateIotSchema),
-  deviceController.update
-);
-deviceRouter.delete(
-  "/:deviceId",
-  authorizeAccess(),
-  zodValidate(emptyBodySchema),
-  deviceController.delete
-);
+deviceRouter.get("/",zodValidate(emptyBodySchema),deviceController.getAll);
+deviceRouter.get("/:deviceId",zodValidate(emptyBodySchema),deviceController.getById);
+deviceRouter.post("/",zodValidate(createIotSchema),deviceController.create);
+deviceRouter.put("/:deviceId",zodValidate(updateIotSchema),deviceController.update);
+deviceRouter.delete("/:deviceId",zodValidate(emptyBodySchema),deviceController.delete);
 
 export const swaggerDevicesRoutes = [
   swaggerGetAllDevices,

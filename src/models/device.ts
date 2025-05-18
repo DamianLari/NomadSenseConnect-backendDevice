@@ -11,19 +11,11 @@ export interface IDevice extends Document {
   role: string;            // ex: "surveillance", "relay"
   modules: string[];       // ["peeky", "heary", ...]
   status: "active" | "inactive" | "error";
-  lastSeen?: Date;
-  location?: ILocation;
-  metadata?: Record<string, any>; // données techniques additionnelles
+ // données techniques additionnelles
 }
-
-const LocationSchema: Schema = new Schema({
-  lat: { type: Number, required: true },
-  lng: { type: Number, required: true },
-});
 
 const DeviceSchema: Schema = new Schema(
   {
-    id: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     role: { type: String, required: true },
     modules: { type: [String], required: true },
@@ -32,9 +24,7 @@ const DeviceSchema: Schema = new Schema(
       enum: ["active", "inactive", "error"],
       default: "inactive",
     },
-    lastSeen: { type: Date },
-    location: { type: LocationSchema, required: false },
-    metadata: { type: Schema.Types.Mixed },
+    
   },
   { timestamps: true }
 );

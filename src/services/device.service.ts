@@ -4,7 +4,7 @@ import {
   createIotSchema,
   updateIotSchema,
 } from "../dto/device.dto";
-import Device, { IDevice } from "../models/Device";
+import Device, { IDevice } from "../models/device";
 
 import {
   DeviceCreationException,

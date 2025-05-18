@@ -19,7 +19,9 @@ services:
     restart: always
 
   deviceservice:
-    build: ../nomadsense-device-service
+    build: .
+    ports:
+      - "4000:4000"
     environment:
       - ENVIRONMENT=${ENVIRONMENT}
       - ENDPOINT_PREFIX=${DEVICE_SERVICE_ENDPOINT_PREFIX}

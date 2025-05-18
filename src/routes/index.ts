@@ -1,4 +1,6 @@
 import deviceRouter from "./device.routes";
+import peekyRouter from "./peeky.routes";
+import presetRouter from "./device_preset.routes";
 
 import { RouteConfig } from "@asteasolutions/zod-to-openapi";
 import { Router } from "express";
@@ -10,6 +12,10 @@ const router = Router();
 
 // Register device routes
 router.use("/devices", deviceRouter);
+router.use("/devicespresets", presetRouter);
+router.use("/modules/peeky", peekyRouter);
+router.use("/modulespresets/peeky", presetRouter);
+
 
 // Health check route
 const swaggerGetHealth: RouteConfig = {

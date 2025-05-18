@@ -34,7 +34,7 @@ const consulService = {
             `traefik.http.routers.${env.SERVICE_NAME}-options.rule=PathPrefix(\`${env.ENDPOINT_PREFIX}${env.CONSUL_PATH_PREFIX}\`) && Method(\`OPTIONS\`)`,
             `traefik.http.routers.${env.SERVICE_NAME}-options.priority=200`,
             // Prometheus metrics available
-            "prometheus",
+            //"prometheus",
           ],
           Meta: {
             prometheus_port: `${env.SERVICE_PORT}`,
