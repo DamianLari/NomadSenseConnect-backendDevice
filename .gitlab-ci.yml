@@ -1,0 +1,25 @@
+stages:
+  - test
+
+variables:
+  ENVIRONMENT: development
+  ENDPOINT_PREFIX: /api
+  SERVICE_PORT: 3000
+  SERVICE_ADDRESS: localhost
+  SERVICE_NAME: restaurant_service
+  CONSUL_HOST: localhost
+  CONSUL_PORT: 8500
+  CONSUL_PATH_PREFIX: ""
+  MONGODB_HOST: "mongodb-restaurant"
+  MONGODB_PORT: 27017
+  MONGODB_NAME: "restaurant_service"
+  MONGODB_USERNAME: "admin"
+  MONGODB_PASSWORD: "password"
+
+test:
+  stage: test
+  image: node:18
+  before_script:
+    - npm install
+  script:
+    - npm run test

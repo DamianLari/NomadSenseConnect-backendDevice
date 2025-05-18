@@ -1,0 +1,82 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "globals": {
+    "require": "readonly",
+    "module": "writable"
+  },
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": [
+    "react",
+    "@typescript-eslint"
+  ],
+  "rules": {
+    // imports organization
+    "sort-imports": [
+      "warn",
+      {
+        "ignoreDeclarationSort": true,
+        "ignoreCase": true
+      }
+    ],
+    // Indentation
+    "indent": [
+      "error",
+      2
+    ],
+    // Variable Declaration
+    "no-var": "error",
+    // Semicolons
+    "semi": [
+      "error",
+      "always"
+    ],
+    "react/react-in-jsx-scope": "off",
+    // No prop-types, using typescript
+    "react/prop-types": "off",
+    "no-undef": "off",
+    // Quotes
+    "quotes": [
+      "error",
+      "double"
+    ],
+    // Arrow Functions
+    "prefer-arrow-callback": "error",
+    // Template Literals
+    "prefer-template": "error",
+    // Unused Variables
+    "no-unused-vars": "error",
+    // Destructuring
+    "prefer-destructuring": "error",
+    // No-console
+    "no-console": "warn",
+    // No-eval
+    "no-eval": "error",
+    // No-implied-eval
+    "no-implied-eval": "error",
+    // No-else-return
+    "no-else-return": "error",
+    // No-param-reassign
+    "no-param-reassign": "error"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}

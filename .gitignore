@@ -1,0 +1,10 @@
+# Ignore all node_modules directories
+node_modules
+dist
+
+# Environment
+.env
+
+# IDE
+.vscode
+.idea

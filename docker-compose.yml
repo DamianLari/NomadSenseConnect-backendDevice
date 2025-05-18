@@ -1,0 +1,61 @@
+services:
+  traefik:
+    image: traefik:v2.9
+    command:
+      - "--api.insecure=true"
+      - "--providers.consulcatalog.endpoint.address=consul:8500"
+      - "--providers.file.directory=/etc/traefik/dynamic"
+      - "--providers.file.watch=true"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080" 
+    volumes:
+      - "./traefik.yml:/etc/traefik/traefik.yml"
+      - "./traefik_dynamic.yml:/etc/traefik/dynamic/traefik_dynamic.yml"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - consul
+    restart: always
+
+  deviceservice:
+    build: ../nomadsense-device-service
+    environment:
+      - ENVIRONMENT=${ENVIRONMENT}
+      - ENDPOINT_PREFIX=${DEVICE_SERVICE_ENDPOINT_PREFIX}
+      - SERVICE_PORT=${DEVICE_SERVICE_PORT}
+      - SERVICE_ADDRESS=${DEVICE_SERVICE_ADDRESS}
+      - SERVICE_NAME=${DEVICE_SERVICE_NAME}
+      - CONSUL_HOST=${CONSUL_HOST}
+      - CONSUL_PORT=${CONSUL_PORT}
+      - CONSUL_PATH_PREFIX=${DEVICE_SERVICE_CONSUL_PATH_PREFIX}
+      - MONGODB_HOST=${DEVICE_SERVICE_MONGODB_HOST}
+      - MONGODB_PORT=${DEVICE_SERVICE_MONGODB_PORT}
+      - MONGODB_NAME=${DEVICE_SERVICE_MONGODB_NAME}
+      - MONGODB_USERNAME=${MONGODB_USERNAME}
+      - MONGODB_PASSWORD=${MONGODB_PASSWORD}
+    depends_on:
+      - consul
+      - devicemongodb
+    labels:
+      - "traefik.enable=false"
+
+  devicemongodb:
+    image: mongo:latest
+    container_name: ${DEVICE_SERVICE_MONGODB_HOST}
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD}
+    volumes:
+      - ${MONGODB_DATA_EXTERNAL_DIR}/device-mongodb-data:/data/db
+    labels:
+      - "traefik.enable=false"
+  consul:
+    image: hashicorp/consul:1.15
+    ports:
+      - "8500:8500"
+    volumes:
+      - "./consul-config.json:/consul/config/config.json"
+    command: "consul agent -dev -client=0.0.0.0"
+    restart: always
+
