@@ -1,6 +1,7 @@
 # Ignore all node_modules directories
 node_modules
 dist
+data
 
 # Environment
 .env
